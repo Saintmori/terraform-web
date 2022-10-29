@@ -1,4 +1,5 @@
 ![](asg_elb_vpc.png)
+![](terraform.png)
 # IAAC 
 ## Description
 - In this repo I have three folders , each deploys autoscaling group and application load balancer in a custom vpc , in us-east-1 region.
