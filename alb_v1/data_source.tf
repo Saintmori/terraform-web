@@ -1,6 +1,8 @@
-data "aws_vpc" "selected_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["aws-ue1-nonprod-dev-cat-main-vpc"]
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config = {
+    bucket = "aws-session-backend-file-bucket"
+    key    = "terraform-web/vpc3/terraform.tfstate"
+    region = "us-east-1"
   }
 }

@@ -13,6 +13,8 @@
 - have git locally installed
 - have terraform and AWS credential configured inside the terraform server
 - after cloning the repo you can run these commands in each folder to deploy the vpc, asg and elb.
+- This is a different approch to creating these three resources so it is not using terraform module. Note that , in order to destroy these infrastracture you have to destroy ASG, ALB and finally the custom VPC in order.
+
 ```
 git clone https://github.com/Saintmori/terraform-web.git
 cd terraform-web

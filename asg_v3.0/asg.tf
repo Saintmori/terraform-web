@@ -7,7 +7,7 @@ resource "aws_autoscaling_group" "main" {
   desired_capacity          = var.dev_desired_capacity 
   force_delete              = var.force_delete
   launch_configuration      = aws_launch_configuration.dev_main.name 
-  vpc_zone_identifier       = var.subnets
+  vpc_zone_identifier       = [data.terraform_remote_state.vpc.outputs.aws_public_subnets[0], data.terraform_remote_state.vpc.outputs.aws_public_subnets[1], data.terraform_remote_state.vpc.outputs.aws_private_subnet[0], data.terraform_remote_state.vpc.outputs.aws_private_subnet[1]]
   tag {
     key                 = "env"
     value               = var.env
@@ -26,7 +26,7 @@ resource "aws_autoscaling_group" "main" {
 ###########################auto scaling group load balancer attachment###################
 resource "aws_autoscaling_attachment" "asg_alb_attachment" {
   autoscaling_group_name = aws_autoscaling_group.main.id
-  lb_target_group_arn    = data.aws_lb_target_group.main.arn
+  lb_target_group_arn    = data.terraform_remote_state.alb.outputs.tg_arn
 }
 # min= 1
 # max= 5

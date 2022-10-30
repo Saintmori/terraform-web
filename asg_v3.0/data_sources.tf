@@ -18,13 +18,19 @@ data "template_file" "userdata" {
     "environment" = var.env
   }
 }
-data "aws_vpc" "selected_vpc" {
-  filter {
-    name   = "tag:Name"
-    values = ["aws-ue1-nonprod-dev-cat-main-vpc"]
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config = {
+    bucket = "aws-session-backend-file-bucket"
+    key    = "terraform-web/vpc3/terraform.tfstate"
+    region = "us-east-1"
   }
 }
-data "aws_lb_target_group" "main" {
-  arn  = "arn:aws:elasticloadbalancing:us-east-1:731824476967:targetgroup/aws-ue1-nonprod-dev-cat-main-tg/931624f5f53ffdf8"
-  name = "aws-ue1-nonprod-dev-cat-main-tg"
+data "terraform_remote_state" "alb" {
+  backend = "s3"
+  config = {
+    bucket = "aws-session-backend-file-bucket"
+    key    = "terraform-web/alb.3/terraform.tfstate"
+    region = "us-east-1"
+  }
 }
